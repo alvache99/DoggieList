@@ -7,12 +7,25 @@ export const AuthScreen = (props) => {
     const navigation = useNavigation()
     const [validEmail,setValidEmail] = useState(false)
     const [validPassword,setValidPassword] = useState(false)
+    
+    const[email,setEmail] = useState(null)
+    const[password,setPassword] = useState(null)
+    const[passwordCfm,setPasswordCfm] = useState(null)
 
     const validateEmail = (email) => {
         if(email.indexOf('@')>0 && email.indexOf('.')>0){
             setValidEmail(true)
+            setEmail(email)
         }else{
             setValidEmail(false)
+        }
+    }
+    const validatePasswords = (password , passwordCfm)=>{
+        if(password == passwordCfm && password.length>=6){
+            setValidPassword(true)
+            setPassword(password)
+        }else{
+            setValidPassword(false)
         }
     }
 
@@ -64,14 +77,24 @@ export const AuthScreen = (props) => {
                     placeholder="youremail@email.com"
                     onChangeText = {(email)=>validateEmail(email)}
                     />
-                    <TextInput style={styles.input} placeholder="Your Desired Password" secureTextEntry={true}/>
-                    <TextInput style={styles.input} placeholder="Re-enter Password" secureTextEntry={true}/>
+                    <TextInput 
+                    style={styles.input} 
+                    placeholder="Your Desired Password" 
+                    secureTextEntry={true}
+                    onChangeText={(password)=>setPassword(password)}
+                    />
+                    <TextInput 
+                    style={styles.input} 
+                    placeholder="Re-enter Password" 
+                    secureTextEntry={true}
+                    onChangeText={(passwordA)=>validatePasswords(passwordA,password)}
+                    />
                 </View>
                 <View style={styles.buttonView}>
                     <TouchableOpacity   
-                       style={!validEmail ? styles.submitButtonDisabled : styles.submitButton}
-                       disabled={!validEmail ? true : false}
-                       onPress={()=>{}}>
+                       style={!validEmail || !validPassword  ? styles.submitButtonDisabled : styles.submitButton}
+                       disabled={!validEmail || !validPassword ? true : false}
+                       onPress={()=>{props.signup(email,password)}}>
                             <Text style={{fontSize: 30,textAlign:'center',color:'#eeeeee' }}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
