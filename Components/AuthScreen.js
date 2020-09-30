@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import {StyleSheet,Text,View,TouchableOpacity,TextInput, Button, Image} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 
@@ -7,10 +7,24 @@ export const AuthScreen = (props) => {
     const navigation = useNavigation()
     const [validEmail,setValidEmail] = useState(false)
     const [validPassword,setValidPassword] = useState(false)
+    const [validPasswordLogin,setValidPasswordLogin] = useState(false)
     
     const[email,setEmail] = useState(null)
     const[password,setPassword] = useState(null)
     const[passwordCfm,setPasswordCfm] = useState(null)
+
+  
+
+    useEffect(()=>{
+        if(props.loggedIn){
+            navigation.reset({
+               index: 0,
+                routes:[{name: "Home"}]
+            })
+
+       }
+
+    })
 
     const validateEmail = (email) => {
         if(email.indexOf('@')>0 && email.indexOf('.')>0){
@@ -28,7 +42,14 @@ export const AuthScreen = (props) => {
             setValidPassword(false)
         }
     }
-
+    const validatePasswordsLogin = (password) => {
+        if(password.length>=6){
+            setValidPasswordLogin(true)
+            setPassword(password)
+        }else{
+            setValidPasswordLogin(false)
+        }
+    }
 
     if(!login){
         return(
@@ -44,15 +65,21 @@ export const AuthScreen = (props) => {
                        placeholder="youremail@email.com" 
                        onChangeText = {(email)=>validateEmail(email)}
                        />
-                       <TextInput style={styles.input} placeholder="Your Password" secureTextEntry={true}/>
+                       <TextInput 
+                       style={styles.input} 
+                       placeholder="Your Password" 
+                       secureTextEntry={true}
+                       onChangeText ={(password) => validatePasswordsLogin(password)}
+                       />
                    </View>
                    <View style={styles.buttonView}>
                        <TouchableOpacity 
-                       style={!validEmail ? styles.submitButtonDisabled : styles.submitButton}
-                       disabled={!validEmail ? true : false}
-                       onPress={()=>{}}
+                       style={!validEmail  ? styles.submitButtonDisabled : styles.submitButton}
+                       onPress={()=>{props.signup('login',email,password)}}
                        >
-                        <Text style={{fontSize: 30,textAlign:'center',color:'#eeeeee' }}>Login</Text>
+                        <Text 
+                        style={{fontSize: 30,textAlign:'center',color:'#eeeeee' }}
+                        >Login</Text>
                        </TouchableOpacity>
                    </View>
                    <View style={styles.buttonView}>
@@ -94,7 +121,7 @@ export const AuthScreen = (props) => {
                     <TouchableOpacity   
                        style={!validEmail || !validPassword  ? styles.submitButtonDisabled : styles.submitButton}
                        disabled={!validEmail || !validPassword ? true : false}
-                       onPress={()=>{props.signup(email,password)}}>
+                       onPress={()=>{props.signup('register',email,password)}}>
                             <Text style={{fontSize: 30,textAlign:'center',color:'#eeeeee' }}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
