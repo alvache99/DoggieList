@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react'
-import {StyleSheet,Text,View,TouchableOpacity,TextInput, Button, Image} from 'react-native'
+import {StyleSheet,Text,View,TouchableOpacity,TextInput, Button, Image, Alert} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const AuthScreen = (props) => {
     const [login,setLogin] = useState(false)
@@ -54,9 +55,20 @@ export const AuthScreen = (props) => {
     if(!login){
         return(
                    //Login View
-                   <View style={styles.container}>
-                   <View style={{flexDirection:'row', alignContent:'center', justifyContent:'center'}}>
-                       <Image style={{width:40,height:40,marginLeft:10}} source={require('../assets/logo_button.png')}/>
+                   <View style={styles.container} >
+                        <LinearGradient
+                        // Background Linear Gradient
+                        colors={['rgba(255,255,0,1)', 'transparent']}
+                        style={{
+                        position: 'absolute',
+                        left: 1,
+                        right: 0.5,
+                        top: 0,
+                        height: 1000,
+                        }}
+                    />
+                   <View style={{flexDirection:'row', alignContent:'center', justifyContent:'center',height:100}}>
+                       <Image style={{width:40,height:40,marginLeft:10,marginTop:40}} source={require('../assets/logo_button.png')}/>
                        <Text style={styles.title}>DoggieList</Text>
                    </View>
                    <View style={styles.mainCont}>
@@ -94,8 +106,19 @@ export const AuthScreen = (props) => {
         return(
         //RegisterView
         <View style={styles.container}>
+             <LinearGradient
+                // Background Linear Gradient
+                colors={['rgba(255,255,0,1)', 'transparent']}
+                style={{
+                position: 'absolute',
+                left: 1,
+                right: 0.5,
+                top: 0,
+                height: 1000,
+                }}
+            />
                 <View style={{flexDirection:'row', alignContent:'center', justifyContent:'center'}}>
-                    <Image style={{width:40,height:40,marginLeft:10}} source={require('../assets/logo_button.png')}/>
+                    <Image style={{width:40,height:40,marginLeft:10,marginTop:40}} source={require('../assets/logo_button.png')}/>
                     <Text style={styles.title}>Signup</Text>
                 </View>
                 <View style={styles.mainCont}>
@@ -141,11 +164,12 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         paddingHorizontal:10,
-        marginTop:50,
     },
     title:{
         fontSize:35,
         textAlign:'center',
+        marginTop:40,
+        
     },
     input:{
         padding:5,
