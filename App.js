@@ -8,6 +8,7 @@ import{ HomeScreen } from './Components/HomeScreen'
 import {AuthScreen} from './Components/AuthScreen'
 import {Detailed} from './Components/Detailed'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {AddPet} from './Components/AddPet'
 
 // firebase config
 import {firebaseConfig} from './config/firebase'
@@ -188,6 +189,9 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Auth" >
           {(props) => <AuthScreen {...props} signup={register} loggedIn = {auth} />}
+        </Stack.Screen>
+        <Stack.Screen name="AddPet">
+           {(props) => <AddPet {...props} signup={register} addPetData = {addData} />}
         </Stack.Screen>
         <Stack.Screen 
         name="Home"

@@ -61,12 +61,16 @@ export const HomeScreen = (props) => {
     const showDetail = (item) => {
         navigation.navigate("Detail",item)
     }
+
+    const showAddPet = () => {
+        
+    }
     
     
 
     if(Home){
         return(
-            
+           
         <View style = {styles.container}>
                <LinearGradient
                 // Background Linear Gradient
@@ -81,7 +85,7 @@ export const HomeScreen = (props) => {
             />
             <View style={styles.header}>
                 <Text style={styles.headerText}>List of Dogs</Text>
-                <TouchableOpacity style={styles.headerButton} onPress={() => {setHome(false),setBirthdate(false)}}>
+                <TouchableOpacity style={styles.headerButton} onPress={() => {navigation.navigate("AddPet")}}>
                     <Text style={{fontSize:40,color:'white',marginBottom:10,marginLeft:12}}>+</Text>
                 </TouchableOpacity>
             </View>
